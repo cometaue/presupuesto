@@ -3,23 +3,52 @@
     <h2 class="text-center pb-2">{{ "ingrese presupuesto" | uppercase }}</h2>
     <div class="card">
       <div class="card-body">
-        <div class="text-center mssgError mb-3">
-          <span class="badge bg-danger">{{
-            "EL presupuesto debe ser mayor a cero" | uppercase
-          }}</span>
-        </div>
-        <input
-          type="text"
-          class="form-control form-control-lg text-center"
-          placeholder="Presupuesto..."
-        />
-        <button
-          type="button"
-          class="btn btn-lg btn-block mt-3 text-white w-100"
-          id="aceptar"
+        <form
+          [formGroup]="miFormulario"
+          autocomplete="off"
+          (ngSubmit)="enviar()"
         >
-          {{ "aceptar" | uppercase }}
-        </button>
+          <div class="text-center mssgError mb-3">
+            <span
+              *ngIf="
+                (miFormulario.touched || miFormulario.dirty) &&
+                miFormulario.controls['presupuesto'].hasError('required')
+              "
+              class="badge bg-danger"
+              >{{ "EL presupuesto es obligatorio" | uppercase }}</span
+            >
+            <span
+              *ngIf="
+                miFormulario.controls['presupuesto'].hasError('isNAN') &&
+                !miFormulario.controls['presupuesto'].hasError('required')
+              "
+              class="badge bg-danger"
+              >{{ "EL presupuesto debe ser mayor a cero" | uppercase }}</span
+            >
+            <span
+              *ngIf="
+                miFormulario.controls['presupuesto'].hasError('isNegative') &&
+                !miFormulario.controls['presupuesto'].hasError('required')
+              "
+              class="badge bg-danger"
+              >{{ "EL presupuesto no puede sere negativo" | uppercase }}</span
+            >
+          </div>
+
+          <input
+            type="text"
+            class="form-control form-control-lg text-center"
+            placeholder="Presupuesto..."
+            formControlName="presupuesto"
+          />
+          <button
+            type="submit"
+            class="btn btn-lg btn-block mt-3 text-white w-100"
+            id="aceptar"
+          >
+            {{ "aceptar" | uppercase }}
+          </button>
+        </form>
       </div>
     </div>
   </div>

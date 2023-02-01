@@ -7,6 +7,7 @@ import { PresupuestoComponent } from './components/presupuesto/presupuesto.compo
 import { IngresarGastoComponent } from './components/gastos/ingresar-gasto/ingresar-gasto.component';
 import { ListarGastoComponent } from './components/gastos/listar-gasto/listar-gasto.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,7 @@ import { AppRoutingModule } from './app-routing.module';
     IngresarGastoComponent,
     ListarGastoComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

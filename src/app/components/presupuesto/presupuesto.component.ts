@@ -1,4 +1,10 @@
 import { Component } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-presupuesto',
@@ -25,4 +31,21 @@ import { Component } from '@angular/core';
     `,
   ],
 })
-export class PresupuestoComponent {}
+export class PresupuestoComponent {
+  miFormulario: FormGroup = this.fb.group({
+    presupuesto: [, [Validators.required, this.isNOTaNumber]],
+  });
+
+  constructor(private fb: FormBuilder) {}
+  enviar() {
+    console.log('validacion correcta');
+  }
+
+  isNOTaNumber(control: FormControl) {
+    let valor = parseFloat(control.value?.trim());
+    if (!isNaN(valor) && valor > 0) {
+      return null;
+    } else if (!isNaN(valor) && valor < 0) return { isNegative: true };
+    return { isNAN: true };
+  }
+}
