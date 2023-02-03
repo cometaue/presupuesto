@@ -1,10 +1,8 @@
-import { Component } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl,
-} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { PresupuestoService } from '../../services/presupuesto.service';
+import { Nonumero } from 'src/app/validators/validators';
 
 @Component({
   selector: 'app-presupuesto',
@@ -12,17 +10,26 @@ import {
   styles: [
     `
       #aceptar {
-        background-color: #c94b4b;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 50px;
+        background-color: #8a2be2;
+
+        cursor: pointer;
       }
 
       #aceptar:hover {
-        background-color: #4b134f;
+        background-color: #c94b4b;
+        transition: background-color 0.2s ease-in-out;
       }
 
       h2 {
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
         font-family: 'Montserrat', sans-serif;
         color: white;
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        font-weight: 600;
       }
 
       .mssgError {
@@ -32,20 +39,23 @@ import {
   ],
 })
 export class PresupuestoComponent {
-  miFormulario: FormGroup = this.fb.group({
-    presupuesto: [, [Validators.required, this.isNOTaNumber]],
-  });
-
-  constructor(private fb: FormBuilder) {}
-  enviar() {
-    console.log('validacion correcta');
+  presupuesto: FormControl;
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private _presupuestoService: PresupuestoService
+  ) {
+    this.presupuesto = new FormControl('', [
+      Validators.required,
+      Validators.min(1),
+      Nonumero,
+    ]);
   }
-
-  isNOTaNumber(control: FormControl) {
-    let valor = parseFloat(control.value?.trim());
-    if (!isNaN(valor) && valor > 0) {
-      return null;
-    } else if (!isNaN(valor) && valor < 0) return { isNegative: true };
-    return { isNAN: true };
+  salir() {
+    if (this.presupuesto.errors) {
+      return;
+    }
+    this._presupuestoService.PresupuestoTotal = this.presupuesto.value;
+    this.router.navigate(['/gastos']);
   }
 }

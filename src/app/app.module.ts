@@ -8,6 +8,7 @@ import { IngresarGastoComponent } from './components/gastos/ingresar-gasto/ingre
 import { ListarGastoComponent } from './components/gastos/listar-gasto/listar-gasto.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     IngresarGastoComponent,
     ListarGastoComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    MatIconModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
