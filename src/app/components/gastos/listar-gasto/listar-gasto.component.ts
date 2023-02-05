@@ -12,6 +12,13 @@ import { Subscription } from 'rxjs';
         font-weight: 620;
         font-size: 1.5rem;
       }
+      li {
+        font-size: 1rem;
+        font-weight: 600;
+      }
+      .badge {
+        font-size: 0.9rem;
+      }
     `,
   ],
 })
@@ -19,13 +26,15 @@ export class ListarGastoComponent implements OnDestroy, OnInit {
   subscription: Subscription;
   presupuesto: number;
   restante: number;
+  productos: Producto[] = [];
 
   constructor(private _ps: PresupuestoService) {
     this.presupuesto = 0;
     this.restante = 0;
 
-    this.subscription = this._ps.getGastos().subscribe((result) => {
-      console.log(result);
+    this.subscription = this._ps.getGastos().subscribe((result: Producto) => {
+      this.restante -= result.cantidad;
+      this.productos.push(result);
     });
   }
   ngOnInit(): void {
