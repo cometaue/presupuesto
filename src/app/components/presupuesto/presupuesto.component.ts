@@ -10,7 +10,6 @@ import { Nonumero } from 'src/app/validators/validators';
   styles: [
     `
       h2 {
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
         font-family: 'Montserrat', sans-serif;
         color: white;
         font-size: 1.5rem;
