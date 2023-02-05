@@ -23,7 +23,5 @@ export class GastosComponent implements OnInit {
 
   ngOnInit(): void {
     if (this._ps.presupuestoTotal == 0) this._router.navigate(['/presupuesto']);
-
-    console.log(this._ps.presupuestoTotal);
   }
 }

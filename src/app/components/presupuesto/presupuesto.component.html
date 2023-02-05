@@ -26,7 +26,9 @@
           class="form-control form-control-lg text-center"
           placeholder="Presupuesto..."
           [formControl]="presupuesto"
+          [ngClass]="{ hayErrores: presupuesto.errors && presupuesto.touched }"
         />
+
         <button
           type="button"
           [disabled]="!presupuesto.valid"
@@ -41,7 +43,3 @@
     </div>
   </div>
 </div>
-
-<pre class="text-white">
-  {{ presupuesto.errors | json }}
-</pre>

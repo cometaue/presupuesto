@@ -2,25 +2,97 @@
   <mat-icon style="padding-top: 2.2px; color: orange">monetization_on</mat-icon>
   Ingresar Gasto:
 </h4>
-<hr />
-<div class="form-group mb-4">
-  <label for="gasto" class="mb-2">Gasto</label>
+<hr class="border border-warning border-3 opacity-75" />
+<form
+  class="form-group mb-4"
+  [formGroup]="miFormulario"
+  (ngSubmit)="agregarGasto()"
+>
+  <label for="gasto" class="">Gasto</label>
+
   <input
     type="text"
     id="gasto"
     class="form-control form-control-lg"
+    [ngClass]="{
+      hayErrores:
+        miFormulario.get('consumo')?.errors &&
+        miFormulario.get('consumo')?.touched
+    }"
+    formControlName="consumo"
     placeholder="Ej: Comida"
   />
-</div>
-<div class="form-group mb-4">
-  <label for="cantidad" class="mb-2">Cantidad</label>
+  <div>
+    <span
+      class="badge bg-danger mt-3 mssgError"
+      *ngIf="
+        miFormulario.get('consumo')?.hasError('required') &&
+        miFormulario.get('consumo')?.touched
+      "
+      >{{ "Este campo es obligatorio" | uppercase }}</span
+    >
+    <span
+      class="badge bg-danger mt-3 mssgError"
+      *ngIf="
+        miFormulario.get('consumo')?.hasError('minlength') &&
+        miFormulario.get('consumo')?.touched
+      "
+      >{{ "Este campo debe de contener almenos 3 letras" | uppercase }}</span
+    >
+  </div>
+
+  <label for="cantidad" class=" ">Cantidad</label>
   <input
     type="number"
     id="cantidad"
+    [ngClass]="{
+      hayErrores:
+        miFormulario.get('cantidad')?.errors &&
+        miFormulario.get('cantidad')?.touched
+    }"
+    formControlName="cantidad"
     class="form-control form-control-lg"
     placeholder="Ingresar cantidad..."
   />
-</div>
-<button class="btn btn-lg btn-block mt-2">
-  <mat-icon style="padding-top: 4.5px">add</mat-icon> AGREGAR GASTO
-</button>
+  <div>
+    <span
+      class="badge bg-danger mt-3 mssgError"
+      *ngIf="
+        miFormulario.get('cantidad')?.hasError('required') &&
+        miFormulario.get('cantidad')?.touched
+      "
+      >{{ "Este campo es obligatorio" | uppercase }}</span
+    >
+    <span
+      class="badge bg-danger mt-3 mssgError"
+      *ngIf="
+        miFormulario.get('cantidad')?.hasError('min') &&
+        miFormulario.get('cantidad')?.touched
+      "
+      >{{ "La cantidad tiene que ser igual o mayor a 0" | uppercase }}</span
+    >
+
+    <span
+      class="badge bg-danger mt-3 mssgError"
+      *ngIf="miFormulario.get('cantidad')?.hasError('sobreCredito')"
+      >{{
+        "El crédito disponible es inferior al valor del producto" | uppercase
+      }}</span
+    >
+  </div>
+
+  <button
+    [disabled]="miFormulario.invalid"
+    class="btn btn-lg btn-block mt-3 text-white w-100"
+    type="submit"
+    id="aceptar"
+  >
+    <mat-icon style="padding-top: 4.5px">add</mat-icon> AGREGAR GASTO
+  </button>
+</form>
+
+<!-- <pre>
+  <span> Consumo: {{ miFormulario.get("consumo")?.errors | json }}</span>
+  <span> Cantidad: {{ miFormulario.get("cantidad")?.errors | json }}</span>
+</pre>
+ -->

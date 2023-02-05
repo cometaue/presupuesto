@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { Producto } from '../interfaces/producto.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -6,25 +8,19 @@ import { Injectable } from '@angular/core';
 export class PresupuestoService {
   public presupuestoTotal: number;
   public presupuestoActual: number;
+  private gastos$ = new Subject<Producto>();
 
   constructor() {
     this.presupuestoTotal = 0;
     this.presupuestoActual = 0;
   }
 
-  public get PresupuestoTotal(): number {
-    return this.presupuestoTotal;
+  agregarGasto(producto: Producto) {
+    this.presupuestoActual -= producto.cantidad;
+    this.gastos$.next(producto);
   }
 
-  public set PresupuestoTotal(v: number) {
-    this.presupuestoTotal = v;
-  }
-
-  public get PresupuestoActual(): number {
-    return this.presupuestoActual;
-  }
-
-  public set PresupuestoActual(v: number) {
-    this.presupuestoActual = v;
+  getGastos(): Observable<Producto> {
+    return this.gastos$.asObservable();
   }
 }

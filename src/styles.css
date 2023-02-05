@@ -12,5 +12,42 @@ body {
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.hayErrores {
+  border-color: red;
+
+  box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075) inset,
+    0 0 8px rgba(255, 144, 0, 0.6);
+  outline: 0 none;
+}
+
+#aceptar {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 50px;
+  background-color: #8a2be2;
+
+  cursor: pointer;
+}
+
+#aceptar:hover {
+  background-color: #c94b4b;
+  transition: background-color 0.2s ease-in-out;
+}
+.mssgError {
+  font-size: 0.95em;
+}
+
+.fSize {
+  font-weight: 500;
+  font-size: 1rem;
+  margin-top: 0.75em;
+  margin-bottom: 0.5em;
+}
